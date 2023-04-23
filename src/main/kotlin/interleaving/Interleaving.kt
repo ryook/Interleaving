@@ -1,0 +1,4 @@
+package interleaving
+
+interface Interleaving {
+}
