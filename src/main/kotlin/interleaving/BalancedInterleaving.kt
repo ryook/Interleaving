@@ -1,4 +1,0 @@
-package interleaving
-
-class BalancedInterleaving {
-}
