@@ -1,15 +1,13 @@
 package interleaving
 
-import interleaving.data.InterleavingInfo
-import interleaving.data.Ranking
+import interleaving.data.RankingItem
 
 class BalancedInterleaving<T> : Interleaving<T> {
-
-    override fun interleave(rankingA: List<Ranking<T>>, rankingB: List<Ranking<T>>, topN: Int?): List<T> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getInfo(): InterleavingInfo<T> {
+    override fun interleave(
+        rankingA: List<RankingItem<T>>,
+        rankingB: List<RankingItem<T>>,
+        topN: Int?
+    ): List<RankingItem<T>> {
         TODO("Not yet implemented")
     }
 }

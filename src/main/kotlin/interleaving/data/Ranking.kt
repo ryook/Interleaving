@@ -1,7 +1,8 @@
 package interleaving.data
 
-data class Ranking<T>(
+data class RankingItem<T>(
     val index: Int,
-    val value: String,
-    val item: T
+    val key: String,
+    val item: T,
+    val ranking: String
 )

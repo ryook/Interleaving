@@ -1,12 +1,12 @@
 package interleaving
 
-import interleaving.data.InterleavingInfo
-import interleaving.data.Ranking
+import interleaving.data.RankingItem
 
 
 interface Interleaving<T> {
-    fun interleave(rankingA: List<Ranking<T>>, rankingB: List<Ranking<T>>, topN: Int? = null): List<T>
-
-    fun getInfo(): InterleavingInfo<T>
-
+    fun interleave(
+        rankingA: List<RankingItem<T>>,
+        rankingB: List<RankingItem<T>>,
+        topN: Int? = null
+    ): List<RankingItem<T>>
 }
