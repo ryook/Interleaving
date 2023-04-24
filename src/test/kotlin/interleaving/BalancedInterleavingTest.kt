@@ -2,46 +2,116 @@ package interleaving
 
 import interleaving.data.RankingItem
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import java.util.*
 import kotlin.test.assertEquals
 
 class BalancedInterleavingTest {
 
     @Test
-    fun interleave() {
+    fun interleave_startFromA() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(true)
+
         val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
         val rankingB = generateRanking(listOf("4", "5", "6"), "rankingB")
 
-        val actual = BalancedInterleaving<String>().interleave(rankingA = rankingA, rankingB = rankingB)
+        val actual = BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB)
 
         val expected = listOf(
             RankingItem(0, "1", item = "1", ranking = "rankingA"),
-            RankingItem(1, "2", item = "2", ranking = "rankingB"),
-            RankingItem(2, "3", item = "3", ranking = "rankingA"),
+            RankingItem(0, "4", item = "4", ranking = "rankingB"),
+            RankingItem(1, "2", item = "2", ranking = "rankingA"),
         )
         assertEquals(expected, actual)
     }
 
     @Test
-    fun interleaveSameItems() {
-        val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
-        val rankingB = generateRanking(listOf("1", "2", "3"), "rankingB")
+    fun interleave_startFromB() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(false)
 
-        val actual = BalancedInterleaving<String>().interleave(rankingA = rankingA, rankingB = rankingB)
-
-        val expected = listOf(
-            RankingItem(0, "1", item = "1", ranking = "rankingA"),
-            RankingItem(1, "2", item = "2", ranking = "rankingB"),
-            RankingItem(2, "3", item = "3", ranking = "rankingA"),
-        )
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun interleave2() {
         val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
         val rankingB = generateRanking(listOf("2", "1", "3"), "rankingB")
 
-        val actual = BalancedInterleaving<String>().interleave(rankingA = rankingA, rankingB = rankingB)
+        val actual = BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB)
+
+        val expected = listOf(
+            RankingItem(0, "2", item = "2", ranking = "rankingB"),
+            RankingItem(0, "1", item = "1", ranking = "rankingA"),
+            RankingItem(2, "3", item = "3", ranking = "rankingB"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun interleaveSameItems_startFromA() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(true)
+
+        val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
+        val rankingB = generateRanking(listOf("1", "2", "3"), "rankingB")
+
+        val actual = BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB)
+
+        val expected = listOf(
+            RankingItem(0, "1", item = "1", ranking = "rankingA"),
+            RankingItem(1, "2", item = "2", ranking = "rankingA"),
+            RankingItem(2, "3", item = "3", ranking = "rankingA"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun interleave_setTop2() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(true)
+
+        val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
+        val rankingB = generateRanking(listOf("4", "5", "6"), "rankingB")
+
+        val actual =
+            BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB, topN = 2)
+
+        val expected = listOf(
+            RankingItem(0, "1", item = "1", ranking = "rankingA"),
+            RankingItem(0, "4", item = "4", ranking = "rankingB"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun interleave_setTop5() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(true)
+
+        val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
+        val rankingB = generateRanking(listOf("4", "5", "6"), "rankingB")
+
+        val actual =
+            BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB, topN = 5)
+
+        val expected = listOf(
+            RankingItem(0, "1", item = "1", ranking = "rankingA"),
+            RankingItem(0, "4", item = "4", ranking = "rankingB"),
+            RankingItem(1, "2", item = "2", ranking = "rankingA"),
+            RankingItem(1, "5", item = "5", ranking = "rankingB"),
+            RankingItem(2, "3", item = "3", ranking = "rankingA"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun interleaveSameItems_setTop5() {
+        val mockRandom = mock(Random::class.java)
+        `when`(mockRandom.nextBoolean()).thenReturn(true)
+
+        val rankingA = generateRanking(listOf("1", "2", "3"), "rankingA")
+        val rankingB = generateRanking(listOf("1", "2", "3"), "rankingB")
+
+        val actual =
+            BalancedInterleaving<String>(mockRandom).interleave(rankingA = rankingA, rankingB = rankingB, topN = 5)
 
         val expected = listOf(
             RankingItem(0, "1", item = "1", ranking = "rankingA"),
