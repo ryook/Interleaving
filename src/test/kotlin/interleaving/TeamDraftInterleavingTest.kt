@@ -40,7 +40,7 @@ class TeamDraftInterleavingTest {
         val expected = listOf(
             RankingItem(0, "4", item = "4", ranking = "rankingB"),
             RankingItem(0, "1", item = "1", ranking = "rankingA"),
-            RankingItem(2, "5", item = "5", ranking = "rankingB"),
+            RankingItem(1, "5", item = "5", ranking = "rankingB"),
         )
         assertEquals(expected, actual)
     }
@@ -57,7 +57,7 @@ class TeamDraftInterleavingTest {
 
         val expected = listOf(
             RankingItem(0, "1", item = "1", ranking = "rankingA"),
-            RankingItem(1, "2", item = "2", ranking = "rankingA"),
+            RankingItem(1, "2", item = "2", ranking = "rankingB"),
             RankingItem(2, "3", item = "3", ranking = "rankingA"),
         )
         assertEquals(expected, actual)
@@ -115,7 +115,7 @@ class TeamDraftInterleavingTest {
 
         val expected = listOf(
             RankingItem(0, "1", item = "1", ranking = "rankingA"),
-            RankingItem(1, "2", item = "2", ranking = "rankingA"),
+            RankingItem(1, "2", item = "2", ranking = "rankingB"),
             RankingItem(2, "3", item = "3", ranking = "rankingA"),
         )
         assertEquals(expected, actual)

@@ -21,7 +21,7 @@ class TeamDraftInterleaving<T>(private val random: Random = Random()) : Interlea
         var pointerB = 0
         val checked = mutableSetOf<String>()
 
-        while ((resuls.size < L && pointerA < rankingASize && pointerB < rankingBSize)) {
+        while (resuls.size < L && pointerA < rankingASize && pointerB < rankingBSize) {
             val isAFirst = random.nextBoolean()
             if (teamA.size < teamB.size || (teamA.size == teamB.size && isAFirst)) {
                 var item = rankingA.filter { !checked.contains(it.key) }.getOrNull(0);
@@ -40,7 +40,7 @@ class TeamDraftInterleaving<T>(private val random: Random = Random()) : Interlea
                     teamB.add(item.key)
 
                 }
-                pointerA++
+                pointerB++
             }
         }
 
